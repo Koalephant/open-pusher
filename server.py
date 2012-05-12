@@ -9,16 +9,15 @@ GLOBALS={
 
 class WSHandler(WebSocketHandler):
     def open(self):
-        print 'new connection'
-        self.write_message("Hello World")
+        print 'connection established'
         GLOBALS['sockets'].append(self)
 
     def on_message(self, message):
-        print 'Esta? :'
-        print (self in GLOBALS['sockets'])
-        print 'message received %s' % message
+        for handle in GLOBALS['sockets']:
+            handle.write_message(message)
 
     def on_close(self):
+        GLOBALS['sockets'].remove(self)
         print 'connection closed'
 
 application = Application([
