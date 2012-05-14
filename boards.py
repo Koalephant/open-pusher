@@ -1,10 +1,10 @@
-from messages import MessageParser
+from messages import MessageParser, MessageHandler
 
 class BoardsController(object):
 
     def __init__(self):
         self.boards = {}
-        self.message_parser = MessageParser(MessageHandler())
+        self.message_parser = MessageParser(MessageHandler(self))
 
     def register(self, channel_id, handle):
         if channel_id in self.boards.keys():
@@ -17,4 +17,7 @@ class BoardsController(object):
 
     def get_board_handles(self, channel_id):
         return self.boards.get(channel_id)
+
+    def on_message(self, handle, message):
+        self.message_parser.parse(handle, message)
   
