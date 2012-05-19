@@ -32,7 +32,6 @@ class WebSocketsServer:
 
     def start(self):
         io_loop = tornado.ioloop.IOLoop.instance()
-        io_loop.se
         io_loop.start()
 
     def stop(self):
