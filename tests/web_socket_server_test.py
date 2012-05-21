@@ -17,10 +17,6 @@ class WebSocketServerTest(unittest.TestCase):
     def tearDown(self):
         self.server.stop()
 
-    def test_connecting_to_server(self):
-        ws = create_connection("ws://localhost:8888/ws")
-        ws.close()
-
     def test_receving_move_message_from_same_channel(self):
         ws2 = create_connection("ws://localhost:8888/ws")
         ws2.send('{"type":"register","args":{"channel_id":"1"}}')
