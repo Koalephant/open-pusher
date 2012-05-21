@@ -17,7 +17,7 @@ class BoardSyncHandler(WebSocketHandler):
         boards_controller.on_message(self, message)
 
     def on_close(self):
-        pass#boards_controller.unregister(self)
+        pass
 
 
 class WebSocketsServer:
@@ -27,14 +27,15 @@ class WebSocketsServer:
             (uri, BoardSyncHandler),
         ])
 
-        http_server = HTTPServer(application)
-        http_server.listen(port)
+        self.http_server = HTTPServer(application)
+        self.http_server.listen(port)
 
     def start(self):
         io_loop = tornado.ioloop.IOLoop.instance()
         io_loop.start()
 
     def stop(self):
+        self.http_server.stop()
         tornado.ioloop.IOLoop.instance().stop()
 
 if __name__ == "__main__":
