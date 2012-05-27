@@ -15,6 +15,11 @@ class BoardsController(object):
     def unregister(self, channel_id, handle):
         self.boards[channel_id].remove(handle)
 
+    def unregister(self, handle):
+        for channel_id in self.boards:
+            handles = self.boards[channel_id]
+            handles.remove(handle)
+
     def get_board_handles(self, channel_id):
         return self.boards.get(channel_id)
 

@@ -14,6 +14,11 @@ class MessageHandlerTest(unittest.TestCase):
 
         self.message_handler.register.assert_called_with(self.handle, {})
 
+    def test_parsing_new_message(self):
+        self.message_parser.parse(self.handle, '{"type":"new", "args": {}}')
+
+        self.message_handler.new.assert_called_with(self.handle, {})
+
     def test_parsing_postit_moved_message(self):
         self.message_parser.parse(self.handle, '{"type":"move", "args": {}}')
         self.message_handler.move.assert_called_with(self.handle, {})

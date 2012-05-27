@@ -16,12 +16,21 @@ class BoardsControllerTest(unittest.TestCase):
 
         assert handle in self.boards_controller.get_board_handles(channel_id)
 
-    def test_unregister_handle(self):
+    def test_unregister_handle_from_channel(self):
         channel_id = "xxx"
         handle = MagicMock()
         self.boards_controller.register(channel_id, handle)
 
         self.boards_controller.unregister(channel_id, handle)
+
+        assert handle not in self.boards_controller.get_board_handles(channel_id)
+
+    def test_unregister_handle(self):
+        channel_id = "xxx"
+        handle = MagicMock()
+        self.boards_controller.register(channel_id, handle)
+
+        self.boards_controller.unregister(handle)
 
         assert handle not in self.boards_controller.get_board_handles(channel_id)
 

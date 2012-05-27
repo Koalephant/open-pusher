@@ -24,3 +24,11 @@ class MessageHandler(object):
         }
         for handle in self.boards_controller.get_board_handles(args["channel_id"]):
             handle.write_message(json.dumps(moving_message))
+
+    def new(self, handle, args):
+        new_message = {
+            "type":"new",
+            "args":{"postit_id":args["postit_id"], "x":args["x"], "y":args["y"]}
+        }
+        for handle in self.boards_controller.get_board_handles(args["channel_id"]):
+            handle.write_message(json.dumps(new_message))

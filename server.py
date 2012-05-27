@@ -17,6 +17,7 @@ class BoardSyncHandler(WebSocketHandler):
         boards_controller.on_message(self, message)
 
     def on_close(self):
+        print 'connection closed'
         pass
 
 
