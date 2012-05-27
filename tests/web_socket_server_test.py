@@ -46,3 +46,20 @@ class WebSocketServerTest(unittest.TestCase):
         ws.close()
 
         assert received_message == expected_message
+
+
+    def test_receving_select_message_from_same_channel(self):
+        ws2 = create_connection("ws://localhost:8888/ws")
+        ws2.send('{"type":"register","args":{"channel_id":"1"}}')
+
+        ws = create_connection("ws://localhost:8888/ws")
+
+        ws.send('{"type":"select","args":{"channel_id":"1","id":2}}')
+
+        received_message = json.loads(ws2.recv())
+        expected_message = {"type":"select","args":{"id":2}}
+
+        ws2.close()
+        ws.close()
+
+        assert received_message == expected_message
