@@ -37,10 +37,10 @@ class WebSocketServerTest(unittest.TestCase):
 
         ws = create_connection("ws://localhost:8888/ws")
 
-        ws.send('{"type":"new","args":{"channel_id":"1","postit_id":2,"x":1,"y":2}}')
+        ws.send('{"type":"new","args":{"channel_id":"1","postit_id":2,"x":1,"y":2, "text":"Hola mundo"}}')
 
         received_message = json.loads(ws2.recv())
-        expected_message = {"type":"new","args":{"postit_id":2,"x":1,"y":2}}
+        expected_message = {"type":"new","args":{"postit_id":2,"x":1,"y":2, "text":"Hola mundo"}}
 
         ws2.close()
         ws.close()
