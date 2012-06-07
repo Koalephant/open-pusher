@@ -10,7 +10,6 @@ class BoardSyncHandler(WebSocketHandler):
 
     def open(self):
         print 'connection established'
-        pass
 
     def on_message(self, message):
         print message
@@ -18,8 +17,7 @@ class BoardSyncHandler(WebSocketHandler):
 
     def on_close(self):
         print 'connection closed'
-        pass
-
+        boards_controller.unregister(self)
 
 class WebSocketsServer:
 
