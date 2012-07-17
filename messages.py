@@ -38,5 +38,6 @@ class MessageHandler(object):
             "type":"select",
             "args":{"id":args["id"]}
         }
-        for handle in self.boards_controller.get_board_handles(args["channel_id"]):
-            handle.write_message(json.dumps(select_message))
+        for board_handle in self.boards_controller.get_board_handles(args["channel_id"]):
+            if board_handle!=handle:
+                board_handle.write_message(json.dumps(select_message))
