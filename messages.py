@@ -41,3 +41,12 @@ class MessageHandler(object):
         for board_handle in self.boards_controller.get_board_handles(args["channel_id"]):
             if board_handle!=handle:
                 board_handle.write_message(json.dumps(select_message))
+
+    def deselect(self, handle, args):
+        deselect_message = {
+            "type":"deselect",
+            "args":{"id":args["id"]}
+        }
+        for board_handle in self.boards_controller.get_board_handles(args["channel_id"]):
+            if board_handle!=handle:
+                board_handle.write_message(json.dumps(deselect_message))
