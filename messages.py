@@ -29,10 +29,11 @@ class MessageHandler(object):
     def new(self, handle, args):
         new_message = {
             "type":"new",
-            "args":{"obj":"postit","postit_id":args["postit_id"], "x":args["x"], "y":args["y"], "text":args["text"]}
+            "args":{"obj":args["obj"],"id":args["id"], "x":args["x"], "y":args["y"], "text":args["text"]}
         }
         for handle in self.boards_controller.get_board_handles(args["channel_id"]):
             handle.write_message(json.dumps(new_message))
+
 
     def select(self, handle, args):
         select_message = {
