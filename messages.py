@@ -18,36 +18,27 @@ class MessageHandler(object):
         self.boards_controller.register(args['channel_id'], handle)
 
     def move(self, handle, args):
-        moving_message = {
-            "type":"move",
-            "args":{"postit_id":args["postit_id"], "x":args["x"], "y":args["y"]}
-        }
-        for board_handle in self.boards_controller.get_board_handles(args["channel_id"]):
-            if board_handle!=handle:
-                board_handle.write_message(json.dumps(moving_message))
+        self.publish(Message("move", args), args["channel_id"], handle)
 
     def new(self, handle, args):
-        new_message = {
-            "type":"new",
-            "args":{"obj":"postit","postit_id":args["postit_id"], "x":args["x"], "y":args["y"], "text":args["text"]}
-        }
-        for handle in self.boards_controller.get_board_handles(args["channel_id"]):
-            handle.write_message(json.dumps(new_message))
+        self.publish(Message("new", args), args["channel_id"])
 
     def select(self, handle, args):
-        select_message = {
-            "type":"select",
-            "args":{"id":args["id"]}
-        }
-        for board_handle in self.boards_controller.get_board_handles(args["channel_id"]):
-            if board_handle!=handle:
-                board_handle.write_message(json.dumps(select_message))
+        self.publish(Message("select", args), args["channel_id"], handle)
 
     def deselect(self, handle, args):
-        deselect_message = {
-            "type":"deselect",
-            "args":{"id":args["id"]}
-        }
-        for board_handle in self.boards_controller.get_board_handles(args["channel_id"]):
-            if board_handle!=handle:
-                board_handle.write_message(json.dumps(deselect_message))
+        self.publish(Message("deselect", args), args["channel_id"], handle)
+
+    def publish(self, message, channel_id, excluded_handle=None):
+        for board_handle in self.boards_controller.get_board_handles(channel_id):
+            if board_handle!=excluded_handle:
+                board_handle.write_message(json.dumps(message.as_dict()))
+
+
+class Message(object):
+    def __init__(self, type, args):
+        self.type = type
+        self.args = args
+
+    def as_dict(self):
+        return {"type":self.type, "args": self.args}
