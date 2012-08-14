@@ -22,9 +22,9 @@ class MessageHandler(object):
             "type":"move",
             "args":{"postit_id":args["postit_id"], "x":args["x"], "y":args["y"]}
         }
-        for handle in self.boards_controller.get_board_handles(args["channel_id"]):
+        for board_handle in self.boards_controller.get_board_handles(args["channel_id"]):
             if board_handle!=handle:
-                handle.write_message(json.dumps(moving_message))
+                board_handle.write_message(json.dumps(moving_message))
 
     def new(self, handle, args):
         new_message = {
