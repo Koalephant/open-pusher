@@ -29,6 +29,9 @@ class MessageHandler(object):
     def deselect(self, handle, args):
         self.publish(Message("deselect", args), args["channel_id"], handle)
 
+    def delete(self, handle, args):
+        self.publish(Message("delete", args), args["channel_id"], handle)
+
     def publish(self, message, channel_id, excluded_handle=None):
         for board_handle in self.boards_controller.get_board_handles(channel_id):
             if board_handle!=excluded_handle:
