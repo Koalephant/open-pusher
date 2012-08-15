@@ -21,7 +21,7 @@ class MessageHandler(object):
         self.publish(Message("move", args), args["channel_id"], handle)
 
     def new(self, handle, args):
-        self.publish(Message("new", args), args["channel_id"])
+        self.publish(Message("new", args), args["channel_id"], handle)
 
     def select(self, handle, args):
         self.publish(Message("select", args), args["channel_id"], handle)
