@@ -6,6 +6,8 @@ class MessageParser(object):
 
     def parse(self, handle, message):
         decoded_message = json.loads(message)
+        if decoded_message['type'] == 'register':
+            self.message_handler.register(handle, decoded_message['args']['channel_id'])
         self.message_handler.handle(decoded_message, handle)
 
 
@@ -13,6 +15,9 @@ class MessageHandler(object):
 
     def __init__(self, boards_controller):
         self.boards_controller = boards_controller
+
+    def register(self, handle, channel_id):
+        self.boards_controller.register(channel_id, handle)
 
     def handle(self, decoded_message, source):
         message = Message(decoded_message['type'],decoded_message['args'])
