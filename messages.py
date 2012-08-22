@@ -6,7 +6,7 @@ class MessageParser(object):
 
     def parse(self, handle, message):
         decoded_message = json.loads(message)
-        getattr(self.message_handler, decoded_message['type'])(handle, decoded_message['args'])
+        self.message_handler.handle(decoded_message, handle)
 
 
 class MessageHandler(object):
@@ -14,23 +14,10 @@ class MessageHandler(object):
     def __init__(self, boards_controller):
         self.boards_controller = boards_controller
 
-    def register(self, handle, args):
-        self.boards_controller.register(args['channel_id'], handle)
-
-    def move(self, handle, args):
-        self.publish(Message("move", args), args["channel_id"], handle)
-
-    def new(self, handle, args):
-        self.publish(Message("new", args), args["channel_id"], handle)
-
-    def select(self, handle, args):
-        self.publish(Message("select", args), args["channel_id"], handle)
-
-    def deselect(self, handle, args):
-        self.publish(Message("deselect", args), args["channel_id"], handle)
-
-    def delete(self, handle, args):
-        self.publish(Message("delete", args), args["channel_id"], handle)
+    def handle(self, decoded_message, source):
+        message = Message(decoded_message['type'],decoded_message['args'])
+        channel_id = decoded_message['args']['channel_id']
+        self.publish(message, channel_id, source)
 
     def publish(self, message, channel_id, excluded_handle=None):
         for board_handle in self.boards_controller.get_board_handles(channel_id):

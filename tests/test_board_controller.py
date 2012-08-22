@@ -21,7 +21,7 @@ class BoardsControllerTest(unittest.TestCase):
         handle = MagicMock()
         self.boards_controller.register(channel_id, handle)
 
-        self.boards_controller.unregister(channel_id, handle)
+        self.boards_controller.unregister(handle, channel_id)
 
         assert handle not in self.boards_controller.get_board_handles(channel_id)
 
@@ -37,7 +37,9 @@ class BoardsControllerTest(unittest.TestCase):
     def test_routing_move_message_to_right_channel(self):
         sender_handle = MagicMock()
         handle = MagicMock()
-        self.boards_controller.register(1, handle)
+
+        expected_channel_id = 1
+        self.boards_controller.register(expected_channel_id, handle)
 
         self.boards_controller.on_message(sender_handle, '{"type":"move", "args": {"channel_id":1, "postit_id":1, "x":10, "y":20}}')
 
