@@ -15,7 +15,8 @@ class BoardsController(object):
     def unregister(self, handle, channel_id=None):
         if channel_id is None:
             for channel_id in self.boards:
-                self.boards[channel_id].remove(handle)
+                if handle in self.boards[channel_id]:
+                    self.boards[channel_id].remove(handle)
         else:
             self.boards[channel_id].remove(handle)
 
