@@ -9,14 +9,14 @@ boards_controller = BoardsController()
 class BoardSyncHandler(WebSocketHandler):
 
     def open(self):
-        print 'connection established'
+        #print 'connection established'
 
     def on_message(self, message):
-        print message
+        #print message
         boards_controller.on_message(self, message)
 
     def on_close(self):
-        print 'connection closed'
+        #print 'connection closed'
         boards_controller.unregister(self)
 
 class WebSocketsServer:
