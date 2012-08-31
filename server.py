@@ -10,6 +10,7 @@ class BoardSyncHandler(WebSocketHandler):
 
     def open(self):
         #print 'connection established'
+        pass
 
     def on_message(self, message):
         #print message
