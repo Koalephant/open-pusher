@@ -1,1 +1,2 @@
 tornado
+git+git://github.com/mrjoes/tornadio2.git

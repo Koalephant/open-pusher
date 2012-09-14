@@ -43,5 +43,5 @@ class BoardsControllerTest(unittest.TestCase):
 
         self.boards_controller.on_message(sender_handle, '{"type":"move", "args": {"channel_id":1, "postit_id":1, "x":10, "y":20}}')
 
-        assert handle.write_message.call_count == 1
+        assert handle.send.call_count == 1
 

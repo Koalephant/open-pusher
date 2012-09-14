@@ -27,7 +27,7 @@ class MessageHandler(object):
     def publish(self, message, channel_id, excluded_handle=None):
         for board_handle in self.boards_controller.get_board_handles(channel_id):
             if board_handle!=excluded_handle:
-                board_handle.write_message(json.dumps(message.as_dict()))
+                board_handle.send(json.dumps(message.as_dict()))
 
 
 class Message(object):

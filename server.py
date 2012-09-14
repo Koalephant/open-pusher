@@ -1,34 +1,28 @@
+import tornadio2
+from tornadio2.server import SocketServer
 import tornado
-from tornado.httpserver import HTTPServer
 from tornado.web import Application
-from tornado.websocket import WebSocketHandler
 from boards import BoardsController
 
 boards_controller = BoardsController()
 
-class BoardSyncHandler(WebSocketHandler):
 
-    def open(self):
-        #print 'connection established'
-        pass
+class MyConnection(tornadio2.SocketConnection):
 
     def on_message(self, message):
-        #print message
         boards_controller.on_message(self, message)
 
     def on_close(self):
-        #print 'connection closed'
         boards_controller.unregister(self)
 
 class WebSocketsServer:
 
     def __init__(self, uri, port):
-        application = Application([
-            (uri, BoardSyncHandler),
-        ])
 
-        self.http_server = HTTPServer(application)
-        self.http_server.listen(port)
+        MyRouter = tornadio2.TornadioRouter(MyConnection)
+
+        application = Application(MyRouter.urls, socket_io_port = port)
+        self.http_server = SocketServer(application, auto_start = False)
 
     def start(self):
         io_loop = tornado.ioloop.IOLoop.instance()
