@@ -23,6 +23,12 @@ class BoardsController(object):
     def get_board_handles(self, channel_id):
         return self.boards.get(channel_id)
 
+
+    def count_users(self, channel_id):
+        if channel_id in self.boards.keys():
+            return len(self.boards.get(channel_id))
+        return 0
+
     def on_message(self, handle, message):
         self.message_parser.parse(handle, message)
   

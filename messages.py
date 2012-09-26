@@ -17,6 +17,9 @@ class MessageHandler(object):
         self.boards_controller = boards_controller
 
     def register(self, handle, channel_id):
+        connected_users = self.boards_controller.count_users(channel_id)
+        message = Message("info",{"users":connected_users})
+        handle.send(message.as_json())
         self.boards_controller.register(channel_id, handle)
 
     def handle(self, decoded_message, source):
@@ -37,3 +40,6 @@ class Message(object):
 
     def as_dict(self):
         return {"type":self.type, "args": self.args}
+
+    def as_json(self):
+        return json.dumps(self.as_dict())
