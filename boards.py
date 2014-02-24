@@ -7,7 +7,8 @@ class BoardsController(object):
         self.message_handler = MessageHandler(self)
         self.message_parser = MessageParser(self.message_handler)
 
-    def register(self, channel_id, handle):
+    def register(self, decoded_message, handle):
+        channel_id = decoded_message['args']['channel_id']
         if channel_id in self.boards.keys():
             self.boards[channel_id].append(handle)
         else:

@@ -10,6 +10,7 @@ boards_controller = BoardsController()
 class MyConnection(tornadio2.SocketConnection):
 
     def on_message(self, message):
+        print message
         boards_controller.on_message(self, message)
 
     def on_close(self):
