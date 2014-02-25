@@ -2,4 +2,6 @@ OpenPusher
 ==========
 
 
-OpenPusher is an open source websockets API for real-time communication.
+OpenPusher is an open source websockets API for real-time communication. 
+
+OpenPusher is built upon Tornado and Tornadio2 for socket.io compatibility.
