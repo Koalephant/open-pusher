@@ -1,7 +1,44 @@
-OpenPusher
-==========
+# OpenPusher
 
 
-OpenPusher is an open source websockets API for real-time communication. 
+## What is OpenPusher?
 
-OpenPusher is built upon Tornado and Tornadio2 for socket.io compatibility.
+OpenPusher is an open source websockets API for real-time communication. OpenPusher is built upon Tornado and Tornadio2 for Socket.io compatibility.
+
+
+## How works with Boardino?
+
+Includes Boardino real-time component, that is a websockets server built from its parent tornadio is server.py that handles connections messages.py processing messages and boards.py which is the driver for the board as such.
+
+
+## Instalation
+
+You must have a virtual enviroment as [Boardino](https://github.com/mapale/boardino) or configure it.
+
+Clone repository
+git clone https://github.com/mapale/open-pusher.git
+
+Go to open-pusher directory
+`cd open-pusher`
+
+Install requirements
+`pip install -r requirements.txt`
+
+Run server
+`python server.py`
+
+It returns nothing. Ctrl + C to stop server.
+
+
+## Configure with Boardino
+
+First, open two terminals.
+
+One for Boardino. Execute:
+`python manage.py runserver`
+
+Other for Open-pusher. Execute:
+`python server.py`
+
+
+If all went well you can get the browser to [http://localhost:8000/](http://localhost:8000/) and you'll find Boardino home page.
