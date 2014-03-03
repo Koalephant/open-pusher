@@ -36,5 +36,6 @@ class WebSocketsServer:
 
 if __name__ == "__main__":
     # Port listening (8888)
-    server = WebSocketsServer(r'/ws', 80)
+    import os
+    server = WebSocketsServer(r'/ws', os.getenv('PORT', 8888))
     server.start()
