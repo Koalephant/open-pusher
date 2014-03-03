@@ -22,7 +22,7 @@ class WebSocketsServer:
         MyRouter = tornadio2.TornadioRouter(MyConnection)
 
         application = Application(MyRouter.urls, socket_io_port = port)
-        self.http_server = SocketServer(application, auto_start = False)
+        self.http_server = SocketServer(application, auto_start = False, xheaders=True)
 
     # Start Tornadio2 server
     def start(self):
