@@ -4,6 +4,7 @@ class MessageParser(object):
     def __init__(self, message_handler):
         self.message_handler = message_handler
 
+    # Parse a json file to get channel_id and look the type of decoded message received
     def parse(self, handle, message):
         decoded_message = json.loads(message)
         if decoded_message['type'] == 'register':
@@ -24,6 +25,7 @@ class MessageHandler(object):
         message = Message("info", {"connected_users":connected_users, "users":users})
         handle.send(message.as_json())
 
+    # Get the message information and publish it in the board
     def handle(self, decoded_message, source):
         message = Message(decoded_message['type'],decoded_message['args'])
         channel_id = decoded_message['args']['channel_id']
@@ -35,6 +37,7 @@ class MessageHandler(object):
                 board_handle.send(json.dumps(message.as_dict()))
 
 
+# Message Class
 class Message(object):
 
     def __init__(self, type, args=None):

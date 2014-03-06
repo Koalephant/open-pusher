@@ -1,7 +1,9 @@
 from messages import MessageParser, MessageHandler, Message
 
+# Boards Controller
 class BoardsController(object):
 
+    # Generate a Boards instance
     def __init__(self):
         self.boards = {}
         self.message_handler = MessageHandler(self)
@@ -15,6 +17,7 @@ class BoardsController(object):
             self.boards[channel_id] = {}
             self.boards[channel_id][handle] = decoded_message['args']['user']
 
+    # Remove a board to the Boards instances
     def unregister(self, handle, channel_id=None):
         if channel_id is None:
             for channel_id in self.boards:
@@ -25,6 +28,7 @@ class BoardsController(object):
             self.message_handler.publish(Message("disconnect",self.boards[channel_id][handle]),channel_id)
             del self.boards[channel_id][handle]
 
+    # Get a specific board
     def get_board_handles(self, channel_id):
         return self.boards.get(channel_id)
 
@@ -33,6 +37,7 @@ class BoardsController(object):
         print channel_id
         return self.boards.get(channel_id).values()
 
+    # Get number of users that are in the board at the moment
     def count_users(self, channel_id):
         if channel_id in self.boards.keys():
             return len(self.boards.get(channel_id))
