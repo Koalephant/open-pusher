@@ -20,7 +20,8 @@ class MessageHandler(object):
         channel_id = decoded_message['args']['channel_id']
         connected_users = self.boards_controller.count_users(channel_id)
         self.boards_controller.register(decoded_message, handle)
-        message = Message("info",{"users":connected_users})
+        users = self.boards_controller.get_board_users(channel_id)
+        message = Message("info", {"connected_users":connected_users, "users":users})
         handle.send(message.as_json())
 
     def handle(self, decoded_message, source):
