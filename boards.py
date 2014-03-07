@@ -33,8 +33,6 @@ class BoardsController(object):
         return self.boards.get(channel_id)
 
     def get_board_users(self, channel_id):
-        print self.boards.get(channel_id)
-        print channel_id
         return self.boards.get(channel_id).values()
 
     # Get number of users that are in the board at the moment
