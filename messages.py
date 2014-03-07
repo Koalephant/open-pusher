@@ -8,7 +8,7 @@ class MessageParser(object):
     def parse(self, handle, message):
         decoded_message = json.loads(message)
         if decoded_message['type'] == 'register':
-            self.message_handler.register(handle, decoded_message['args']['channel_id'])
+            self.message_handler.register(handle, decoded_message)
         self.message_handler.handle(decoded_message, handle)
 
 
@@ -17,11 +17,12 @@ class MessageHandler(object):
     def __init__(self, boards_controller):
         self.boards_controller = boards_controller
 
-    # Register a board in Boards instance
-    def register(self, handle, channel_id):
+    def register(self, handle, decoded_message):
+        channel_id = decoded_message['args']['channel_id']
         connected_users = self.boards_controller.count_users(channel_id)
-        self.boards_controller.register(channel_id, handle)
-        message = Message("info",{"users":connected_users})
+        self.boards_controller.register(decoded_message, handle)
+        users = self.boards_controller.get_board_users(channel_id)
+        message = Message("info", {"connected_users":connected_users, "users":users})
         handle.send(message.as_json())
 
     # Get the message information and publish it in the board
